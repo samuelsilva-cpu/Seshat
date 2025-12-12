@@ -1,0 +1,140 @@
+@layer base {
+  /* Custom scrollbar for modern browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(148, 163, 184);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(100, 116, 139);
+  }
+
+  /* Dark mode scrollbar */
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+      background: rgb(71, 85, 105);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(100, 116, 139);
+    }
+  }
+
+  /* Smooth transitions */
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  /* Focus rings */
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  /* Glassmorphism backdrop effect */
+  .glass-effect {
+    @apply backdrop-blur-xl backdrop-filter bg-white/80 dark:bg-slate-900/80;
+  }
+
+  /* Smooth animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-in-up {
+    animation: slideInUp 0.3s ease-in-out;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
+  }
+
+  /* Subtle gradients */
+  .gradient-subtle {
+    @apply bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800;
+  }
+
+  /* Linear-like button hover effect */
+  .btn-hover-lift:hover {
+    @apply -translate-y-0.5 shadow-lg;
+  }
+}
+
+@layer utilities {
+  /* Flex center */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* Text truncate */
+  .line-clamp-1 {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Backgrounds */
+  .bg-app {
+    @apply bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900;
+  }
+
+  /* Text */
+  .text-app-primary {
+    @apply text-slate-900 dark:text-slate-100;
+  }
+
+  .text-app-secondary {
+    @apply text-slate-600 dark:text-slate-400;
+  }
+
+  /* Borders */
+  .border-app {
+    @apply border-slate-200 dark:border-slate-800;
+  }
+}
