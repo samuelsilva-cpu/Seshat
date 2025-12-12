@@ -405,5 +405,24 @@ export const coreRoutes: RouteConfigEntry[] = [
   route("login", "routes/redirects/core/login.tsx"),
 
   // Register redirect
-  route("register", "routes/redirects/core/register.tsx"),
+  rroute("register", "routes/redirects/core/register.tsx"),
+
+  // ============================================
+  // CUSTOM CORE APP (YOUR APP)
+  // ============================================
+  layout("./(core)/layout.tsx", [
+    route("workspace", "./(core)/page.tsx"),
+
+    layout("./(core)/projects/layout.tsx", [
+      route("workspace/projects", "./(core)/projects/page.tsx"),
+    ]),
+
+    layout("./(core)/issues/layout.tsx", [
+      route("workspace/issues", "./(core)/issues/page.tsx"),
+    ]),
+
+    layout("./(core)/boards/layout.tsx", [
+      route("workspace/boards", "./(core)/boards/page.tsx"),
+    ]),
+  ]),
 ] satisfies RouteConfig;
