@@ -2,6 +2,8 @@ import { Link } from "react-router";
 import type { ReactNode } from "react";
 import { cn } from "@plane/utils";
 import { BlurSurface } from "../ui/BlurSurface";
+import PlankLogo from "../ui/PlankLogo";
+import PlankCatIcon from "../ui/PlankCatIcon";
 
 interface NavItemProps {
   icon: ReactNode;
@@ -39,6 +41,7 @@ interface SidebarProps {
   userInitials?: string;
   userName?: string;
   userAvatar?: string;
+  collapsed?: boolean;
 }
 
 export function Sidebar({
@@ -46,6 +49,7 @@ export function Sidebar({
   userInitials = "U",
   userName = "User",
   userAvatar,
+  collapsed = false,
 }: SidebarProps) {
   return (
     <BlurSurface
@@ -54,22 +58,32 @@ export function Sidebar({
       border={false}
       shadow="none"
       className={cn(
-        "h-screen overflow-y-auto",
-        "w-64 flex flex-col",
+        "h-screen overflow-y-auto transition-all duration-300",
+        collapsed ? "w-20" : "w-64",
+        "flex flex-col",
         "border-r border-slate-200 dark:border-slate-800",
         "bg-white/50 dark:bg-slate-900/50"
       )}
     >
       {/* Logo / Brand */}
-      <div className="p-6 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">✓</span>
-          </div>
-          <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Plane
-          </h1>
-        </div>
+      <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-center">
+        <Link
+          to="/app"
+          className={cn(
+            "flex items-center gap-3 rounded-lg transition-opacity duration-200 hover:opacity-75",
+            "text-slate-900 dark:text-slate-100"
+          )}
+        >
+          {collapsed ? (
+            <PlankCatIcon size={32} className="text-slate-900 dark:text-slate-100" />
+          ) : (
+            <PlankLogo
+              compact={false}
+              size={24}
+              className="text-slate-900 dark:text-slate-100"
+            />
+          )}
+        </Link>
       </div>
 
       {/* Navigation */}
@@ -103,16 +117,22 @@ export function Sidebar({
         <div className="my-2 border-t border-slate-200 dark:border-slate-800" />
 
         {/* Quick Access - Placeholder for future */}
-        <div className="px-4 py-2">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
-            Pinned
-          </p>
-        </div>
+        {!collapsed && (
+          <div className="px-4 py-2">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+              Pinned
+            </p>
+          </div>
+        )}
       </nav>
 
       {/* User Profile */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all">
+        <button className={cn(
+          "w-full flex items-center gap-3 px-4 py-3 rounded-lg",
+          "hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-200",
+          collapsed && "justify-center"
+        )}>
           {userAvatar ? (
             <img
               src={userAvatar}
@@ -124,12 +144,14 @@ export function Sidebar({
               {userInitials}
             </div>
           )}
-          <div className="flex-1 text-left">
-            <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-              {userName}
-            </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Profile</p>
-          </div>
+          {!collapsed && (
+            <div className="flex-1 text-left">
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {userName}
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Profile</p>
+            </div>
+          )}
         </button>
       </div>
     </BlurSurface>
